@@ -23,9 +23,9 @@ LIMIT_FPS = 20  #20 frames-per-second maximum
 
 
 color_dark_wall = libtcod.Color(0, 0, 100)
-color_light_wall = libtcod.Color(130, 110, 50)
-color_dark_ground = libtcod.Color(50, 50, 150)
-color_light_ground = libtcod.Color(200, 180, 50)
+color_light_wall = libtcod.Color(57, 137, 50)
+color_dark_ground = libtcod.Color(0, 0, 100)
+color_light_ground = libtcod.Color(255, 0 , 239)
 
 
 class Tile:
