@@ -1,4 +1,5 @@
 import libtcodpy as libtcod
+import math
 
 #actual size of the window
 SCREEN_WIDTH = 80
@@ -94,6 +95,21 @@ class Object:
         #erase the character that represents this object
         libtcod.console_put_char(con, self.x, self.y, ' ', libtcod.BKGND_NONE)
 
+    def move_towards(self, target_x, target_y):
+        dx = target_x - self.x
+        dy = target_y - self.y
+        distance = math.sqrt(dx ** 2 + dy ** 2)
+
+        dx = int(round(dx / distance))
+        dy = int(round(dy / distance))
+        self.move(dx, dy)
+
+    def distance_to(self, other):
+        #return the distance to another object
+        dx = other.x - self.x
+        dy = other.y - self.y
+        return math.sqrt(dx ** 2 + dy ** 2)
+
 
 class Fighter:
     def __init__(self, hp, defense, power):
@@ -104,7 +120,15 @@ class Fighter:
 
 class Basic_monster:
     def take_turn(self):
-        print ("the " + self.owner.name + " growls hoi")
+        #a basic monster takes its turn. If you can see it, it can see you
+        monster = self.owner
+        if libtcod.map_is_in_fov(fov_map, monster.x, monster.y):
+
+            if monster.distance_to(player) >= 2:
+                monster.move_towards(player.x, player.y)
+
+            elif player.fighter.hp > 0:
+                print 'The attack of the ' + monster.name + ' bounces off your shiny metal armor!'
 
 
 def is_blocked(x, y):
